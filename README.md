@@ -9,7 +9,7 @@ This SDK provides a set of tools to interact and manage authentication with Micr
 You can install the SDK from PyPI using `pip`:
 
 ```bash
-pip install microboxlabs-auth-manager-sdk
+pip install microboxlabs-auth-manager
 ```
 
 ### Using Poetry:
@@ -17,7 +17,7 @@ pip install microboxlabs-auth-manager-sdk
 If you're using Poetry for your project, you can add it as a dependency:
 
 ```bash
-poetry add microboxlabs-auth-manager-sdk
+poetry add microboxlabs-auth-manager
 ```
 
 ## Usage

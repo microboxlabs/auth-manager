@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "microboxlabs-auth-manager"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Michel David <mdavid.cu@gmail.com>"]
 readme = "README.md"
