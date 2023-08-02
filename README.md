@@ -25,16 +25,16 @@ poetry add microboxlabs-auth-manager-sdk
 To use the SDK in your Python projects:
 
 ```python
-from microboxlabs_auth_sdk import AuthManager
+from microboxlabs_auth_manager import AuthToken
 
 # Initialization with your client details
-auth_manager = AuthManager(client_id="YOUR_CLIENT_ID", 
+auth = AuthToken(client_id="YOUR_CLIENT_ID", 
                            client_secret="YOUR_CLIENT_SECRET", 
                            audience="https://api.microboxlabs.com/v1", 
                            grant_type="client_credentials")
 
 # Get a new access token
-access_token = auth_manager.get_token()
+access_token = auth.get_token()
 ```
 
 ## Development
@@ -43,8 +43,8 @@ For development purposes, you'll want to clone the repository and set up using P
 
 ```bash
 # Clone the repository
-git clone https://github.com/your_username/microboxlabs-auth-manager-sdk.git
-cd microboxlabs-auth-manager-sdk
+git clone https://github.com/microboxlabs/auth-manager.git
+cd auth-manager
 
 # Install the SDK dependencies for development
 poetry install
@@ -69,7 +69,7 @@ poetry run pytest
 
 ## Documentation
 
-Refer to the [official documentation](URL_TO_YOUR_DOCS) for detailed usage and API references.
+Refer to the [official documentation](https://github.com/microboxlabs/auth-manager#readme) for detailed usage and API references.
 
 ## Contributing
 
