@@ -30,28 +30,3 @@ class AuthToken:
 
     def _is_token_expired(self):
         return datetime.now() > self.expiry
-
-# def is_token_expired(token: str):
-#     # Decode the token without verification to get the payload
-#     payload = jwt.decode(token, options={"verify_signature": False})
-
-#     # Check if the token has expired
-#     current_time = time.time()
-#     if 'exp' in payload and payload['exp'] < current_time:
-#         return True
-#     return False
-
-# def login(client_id: str, client_secret: str, audience: str, grant_type: str):
-    
-#     endpoint = "https://api.microboxlabs.com/api/v1/login"
-
-#     # Get the token from the user
-#     token = requests.post(endpoint, data={
-#         "client_id": client_id,
-#         "client_secret": client_secret,
-#         "audience": audience,
-#         "grant_type": grant_type
-#     })
-#     token.raise_for_status()
-#     return token.json()
-    
