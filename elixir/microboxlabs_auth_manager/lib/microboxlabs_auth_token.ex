@@ -1,9 +1,27 @@
 defmodule MicroboxLabs.AuthToken do
+  @moduledoc """
+  AuthToken is a struct that holds the client_id, client_secret, audience, grant_type, token and expiry
+  """
 
   alias MicroboxLabs.AuthToken
 
   defstruct client_id: nil, client_secret: nil, audience: nil, grant_type: nil, token: nil, expiry: nil
 
+  @doc """
+  Creates a new AuthToken struct
+
+  ## Examples
+
+      iex> AuthToken.new("client_id", "client_secret", "audience", "grant_type")
+      %AuthToken{
+        audience: "audience",
+        client_id: "client_id",
+        client_secret: "client_secret",
+        expiry: nil,
+        grant_type: "grant_type",
+        token: nil
+      }
+  """
   def new(client_id, client_secret, audience, grant_type) do
     %AuthToken{client_id: client_id, client_secret: client_secret, audience: audience, grant_type: grant_type}
   end
@@ -28,7 +46,15 @@ defmodule MicroboxLabs.AuthToken do
 
 
 
+  @doc """
+  Returns the token if it exists and is not expired, otherwise fetches a new token and returns it
 
+  ## Examples
+
+      iex> token = AuthToken.new("client_id", "client_secret", "audience", "grant_type")
+      iex> AuthToken.get_token(token)
+      "sample_token"
+  """
   def get_token(%AuthToken{token: nil} = auth_token) do
     fetch_and_update_token(auth_token)
   end
@@ -53,6 +79,4 @@ defmodule MicroboxLabs.AuthToken do
     Map.update!(auth_token, :expiry, fn _ -> expiry end)
     access_token
   end
-
-  defp is_token_expired?(%AuthToken{expiry: expiry}), do: DateTime.compare(DateTime.utc_now(), expiry) == :gt
 end
