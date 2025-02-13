@@ -42,6 +42,4 @@ jobs:
           pnpm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        with:
-          node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
