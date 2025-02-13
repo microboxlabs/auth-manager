@@ -17,7 +17,8 @@ class AuthToken {
     private grantType: string;
     private token: string | null;
     private expiry: Date | null;
-
+    private tokenRequest: Promise<string> | null;
+    
     constructor(config: AuthTokenConfig) {
         this.clientId = config.clientId;
         this.clientSecret = config.clientSecret;
@@ -25,6 +26,7 @@ class AuthToken {
         this.grantType = config.grantType;
         this.token = null;
         this.expiry = null;
+        this.tokenRequest = null;
     }
 
     private async _fetchToken(): Promise<TokenData> {
@@ -57,9 +59,26 @@ class AuthToken {
 
     public async getToken(): Promise<string> {
         if (!this.token || this._isTokenExpired()) {
-            const tokenData = await this._fetchToken();
-            this.token = tokenData.access_token;
-            this.expiry = new Date(Date.now() + tokenData.expires_in * 1000);
+            /*   const tokenData = await this._fetchToken();
+               this.token = tokenData.access_token;
+               this.expiry = new Date(Date.now() + tokenData.expires_in * 1000);
+           } */
+
+            if (this.tokenRequest) {
+                return this.tokenRequest;
+            }
+
+            // Create new request
+            this.tokenRequest = this._fetchToken().then(tokenData => {
+                this.token = tokenData.access_token;
+                this.expiry = new Date(Date.now() + tokenData.expires_in * 1000);
+                this.tokenRequest = null;
+                return this.token;
+            }).catch(error => {
+                this.tokenRequest = null;
+                throw error;
+            });
+            return this.tokenRequest;
         }
         return this.token;
     }
