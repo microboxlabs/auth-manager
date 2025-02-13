@@ -1,24 +1,32 @@
 # Microboxlabs Auth Manager - Node.js Implementation
 
-A Node.js library for managing authentication tokens for Microboxlabs API.
+A TypeScript/Node.js library for managing authentication tokens for Microboxlabs API.
 
 ## Installation
 
+Using pnpm (recommended):
+```bash
+pnpm add microboxlabs-auth-manager
+```
+
+Using npm:
 ```bash
 npm install microboxlabs-auth-manager
 ```
 
 ## Usage
 
-```javascript
-const AuthToken = require('microboxlabs-auth-manager');
+```typescript
+import AuthToken, { AuthTokenConfig } from 'microboxlabs-auth-manager';
 
-const auth = new AuthToken(
-    'your_client_id',
-    'your_client_secret',
-    'your_audience',
-    'client_credentials'
-);
+const config: AuthTokenConfig = {
+    clientId: 'your_client_id',
+    clientSecret: 'your_client_secret',
+    audience: 'your_audience',
+    grantType: 'client_credentials'
+};
+
+const auth = new AuthToken(config);
 
 // Get a token
 async function example() {
@@ -33,6 +41,7 @@ async function example() {
 
 ## Features
 
+- Written in TypeScript with full type definitions
 - Automatic token refresh when expired
 - Promise-based API
 - Built-in token caching
@@ -40,13 +49,40 @@ async function example() {
 
 ## API Reference
 
-### `new AuthToken(clientId, clientSecret, audience, grantType)`
+### `new AuthToken(config: AuthTokenConfig)`
 
 Creates a new instance of the auth token manager.
 
-### `async getToken()`
+### Interface: AuthTokenConfig
+```typescript
+interface AuthTokenConfig {
+    clientId: string;
+    clientSecret: string;
+    audience: string;
+    grantType: string;
+}
+```
+
+### `async getToken(): Promise<string>`
 
 Returns the current access token, fetching a new one if necessary.
+
+## Development
+
+1. Install dependencies:
+```bash
+pnpm install
+```
+
+2. Build the project:
+```bash
+pnpm build
+```
+
+3. Run tests:
+```bash
+pnpm test
+```
 
 ## Error Handling
 
@@ -55,4 +91,15 @@ The library will throw errors if:
 - Invalid credentials are provided
 - Network issues occur
 
-Make sure to wrap calls in try/catch blocks for proper error handling. 
+Make sure to wrap calls in try/catch blocks for proper error handling.
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Install dependencies (`pnpm install`)
+4. Make your changes
+5. Run tests (`pnpm test`)
+6. Commit your changes (`git commit -m 'Add some amazing feature'`)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request 
