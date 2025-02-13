@@ -2,6 +2,13 @@ const axios = require('axios');
 
 class AuthToken {
     constructor(clientId, clientSecret, audience, grantType) {
+        if (!clientId || !clientSecret || !audience || !grantType) {
+            throw new Error('All parameters (clientId, clientSecret, audience, grantType) are required');
+        }
+        if (typeof clientId !== 'string' || typeof clientSecret !== 'string' || 
+            typeof audience !== 'string' || typeof grantType !== 'string') {
+            throw new Error('All parameters must be strings');
+        }
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.audience = audience;
