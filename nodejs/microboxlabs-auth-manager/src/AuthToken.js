@@ -19,14 +19,28 @@ class AuthToken {
 
     async _fetchToken() {
         const endpoint = "https://api.microboxlabs.com/api/v1/login";
-        const response = await axios.post(endpoint, {
-            client_id: this.clientId,
-            client_secret: this.clientSecret,
-            audience: this.audience,
-            grant_type: this.grantType
-        });
-
-        return response.data;
+        try {
+            const response = await axios.post(endpoint, {
+                client_id: this.clientId,
+                client_secret: this.clientSecret,
+                audience: this.audience,
+                grant_type: this.grantType
+            }, {
+                timeout: 5000 // 5 seconds timeout
+            });
+            
+            if (!response.data || !response.data.access_token || !response.data.expires_in) {
+                throw new Error('Invalid response format from auth server');
+            }
+            return response.data;
+        } catch (error) {
+            if (error.response) {
+                throw new Error(`Auth server error: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`);
+            } else if (error.request) {
+                throw new Error('No response received from auth server');
+            }
+            throw error;
+        }
     }
 
     _isTokenExpired() {
