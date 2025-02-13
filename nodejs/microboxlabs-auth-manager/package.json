@@ -1,0 +1,23 @@
+{
+  "name": "microboxlabs-auth-manager",
+  "version": "1.0.0",
+  "description": "Authentication manager for Microboxlabs API",
+  "main": "src/AuthToken.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "authentication",
+    "microboxlabs",
+    "auth",
+    "token"
+  ],
+  "author": "Microboxlabs",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+} 
