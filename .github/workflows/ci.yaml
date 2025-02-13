@@ -6,18 +6,42 @@ on:
       - 'nodejs/*'
 jobs:
   build:
-    runs-on: ubuntu-latest
     permissions:
-      contents: read
-      id-token: write
+      contents: "read"
+
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-alpine
+
     steps:
-      - uses: actions/checkout@v4
-      # Setup .npmrc file to publish to npm
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - run: corepack enable
+
+      - name: Install dependencies
+        run: |
+          cd nodejs
+          node --version
+          pnpm --version
+          pnpm install
+
+      - name: Build
+        run: |
+          cd nodejs
+          pnpm build
+
+      - name: Publish
+        run: |
+          cd nodejs
+          pnpm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
