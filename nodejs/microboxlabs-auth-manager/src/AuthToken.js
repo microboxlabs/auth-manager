@@ -50,6 +50,9 @@ class AuthToken {
     async getToken() {
         if (!this.token || this._isTokenExpired()) {
             const tokenData = await this._fetchToken();
+            if (!tokenData?.access_token || !tokenData?.expires_in) {
+                throw new Error('Invalid token response: missing required properties');
+            }
             this.token = tokenData.access_token;
             this.expiry = new Date(Date.now() + tokenData.expires_in * 1000);
         }
